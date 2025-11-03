@@ -22,12 +22,12 @@ split p s = case dropWhile p s of
 
 --prediction 
 data ProcessedWeather = ProcessedWeather
-{ targetRain :: Bool --what we want to predict
-, isHot      :: Bool
-, isHumid    :: Bool
-, isCloud    :: Bool
-, isWindy    :: Bool
-} deriving(Show)
+  { targetRain :: Bool
+  , isHot      :: Bool
+  , isHumid    :: Bool
+  , isCloud    :: Bool
+  , isWindy    :: Bool
+  } deriving(Show)
 
 --converter function
 processWeather :: Weather -> ProcessedWeather
@@ -35,16 +35,13 @@ processWeather w = ProcessedWeather
   { targetRain = rain w > 0.0
   , isHot      = temp w > 25.0        -- e.g., "Hot" is over 25°C
   , isHumid    = humidity w > 60.0    -- e.g., "Humid" is over 60%
-  , isCloudy   = cloudcover w > 50.0  -- e.g., "Cloudy" is over 50%
+  , isCloud    = cloudcover w > 50.0  -- e.g., "Cloudy" is over 50%
   , isWindy    = windspeed w > 15.0   -- e.g., "Windy" is over 15 km/h
   }
--- these function might break everything :)
 
 toLine :: [String] -> Weather
 toLine [tim, tem, hum, fee, pre, rai, sno, clo, pres, win, gus, dir] = Weather tim (read tem) (read hum) (read fee) (read pre) (read rai) (read sno) (read clo) (read pres) (read win) (read gus) (read dir)
 toLine _         = error "Invalid CSV line format"
-
-data
 
 loadWeather :: FilePath -> IO [Weather]
 loadWeather filePath = do
@@ -53,6 +50,18 @@ loadWeather filePath = do
         csvData = map (split (== ',')) (tail rows)  -- skip first line
         weatherdata = map toLine csvData
     return weatherdata
+
+boolToString :: Bool -> String
+boolToString True  = "True"
+boolToString False = "False"
+
+processedToCSV :: ProcessedWeather -> String
+processedToCSV pw = 
+    boolToString (targetRain pw) ++ "," ++
+    boolToString (isHot pw) ++ "," ++
+    boolToString (isHumid pw) ++ "," ++
+    boolToString (isCloud pw) ++ "," ++
+    boolToString (isWindy pw)
 
 main :: IO ()
 main = do
@@ -65,3 +74,11 @@ main = do
     
     putStrLn "\nProcessed Boolean data (first 5):"
     mapM_ print (take 5 processedData)
+    
+    -- write to new CSV file
+    let csvHeader = "targetRain,isHot,isHumid,isCloud,isWindy"
+    let csvLines = map processedToCSV processedData
+    let csvContent = unlines (csvHeader : csvLines)
+    
+    writeFile "processed_weather.csv" csvContent
+    putStrLn "\nCleaner CSV written to: processed_weather.csv"

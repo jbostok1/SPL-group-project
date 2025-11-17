@@ -175,7 +175,6 @@ main = do
   let (finalWeights, finalBias) = train dataset learningRate numOfRuns
   putStrLn $ "Trained Weights: " ++ show finalWeights
   putStrLn $ "Trained Bias: " ++ show finalBias
-  -- [75,20.0,0.0,0.0,0.0,100,1015.4,15.8,31.3,21]
-  -- [relHumidity, apparentTemp, precipitation, rain, snowfall, cloudCover, pressure, windSpeed, windGust, windDirection]
-  let prediction = predict [75, 20.0, 0.0, 0.0, 0.0, 100, 1015.4, 15.8, 31.3, 21] finalWeights finalBias
+
+  let prediction = predict [relHumidity, apparentTemp, precipitation, rain, snowfall, cloudCover, pressure, windSpeed, windGust, windDirection] finalWeights finalBias
   putStrLn $ "Prediction for given day" ++ ": " ++ show prediction

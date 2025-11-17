@@ -18,13 +18,13 @@ type Iterations = Int
 sigmoid :: Double -> Double
 sigmoid x = 1.0 / (1.0 + exp (-x))
 
---  create value to pass into sigmoid function
+-- create value to pass into sigmoid function
 hypothesis :: Features -> Weights -> Bias -> Double
 hypothesis features weights bias =
   let input = sum (zipWith (*) features weights) + bias
    in sigmoid input
 
--- calculate the gradient of an individual feature
+-- calculate the gradient of an individaual feature
 gradientExample :: Features -> Label -> Weights -> Bias -> (Weights, Bias)
 gradientExample features label weights bias =
   let h = hypothesis features weights bias
@@ -54,7 +54,8 @@ updateParameters dataset initialWeights initialBias learningRate =
       newWeights = zipWith (-) initialWeights (map (* learningRate) avgGradientWeights)
       newBias = initialBias - learningRate * avgGradientBias
    in (newWeights, newBias)
-   -- train the model on given data to create correct weights and bias valeus.
+
+-- train the model on given data to create correct weights and bias valeus.
 train :: [(Features, Label)] -> LearningRate -> Iterations -> (Weights, Bias)
 train dataset learningRate numOfRuns =
   let numFeatures = length (fst (head dataset))
@@ -63,7 +64,7 @@ train dataset learningRate numOfRuns =
 
       gradientDescentStep (currentWeights, currentBias) _ =
         updateParameters dataset currentWeights currentBias learningRate
-      -- iterate the foldl value to accumulate towards the desired values
+      -- itterate the foldl value to accumulate towards the desired values
       (finalWeights, finalBias) = foldl' gradientDescentStep (initialWeights, initialBias) [1 .. numOfRuns]
    in (finalWeights, finalBias)
 
@@ -77,7 +78,7 @@ predict features weights bias =
 safeReadDouble :: String -> Double
 safeReadDouble s = fromMaybe 0.0 (readMaybe s)
 
--- split up a string based on a delimiter
+-- split up a string based on a delemiter
 splitOn :: Char -> String -> [String]
 splitOn delimiter str =
   case break (== delimiter) str of
@@ -88,3 +89,57 @@ splitOn delimiter str =
 -- helper function to map the array of strings back to double values
 stringsToDoublesSafe :: [String] -> [Double]
 stringsToDoublesSafe = map safeReadDouble
+
+-- read in the CSV data
+parseCSVData :: String -> [(Features, Label)]
+parseCSVData fileContent =
+  let linesOfStrings = lines fileContent
+      -- drop the first column of data as it is just time data
+      dataLines = drop 1 linesOfStrings
+      -- split each row into a list of strings base on ,
+      rowsOfStrings = map (splitOn ',') dataLines
+      -- only read in the now second row onwards, as we are using the first row to act as the label that we will be testing on
+      selectTargetColumns :: [String] -> [Double]
+      selectTargetColumns row =
+        let col2 = safeReadDouble (row !! 1)
+            col3 = safeReadDouble (row !! 2)
+            col4 = safeReadDouble (row !! 3)
+            col5 = safeReadDouble (row !! 4)
+            col6 = safeReadDouble (row !! 5)
+            col7 = safeReadDouble (row !! 6)
+            col8 = safeReadDouble (row !! 7)
+            col9 = safeReadDouble (row !! 8)
+            col10 = safeReadDouble (row !! 9)
+            col11 = safeReadDouble (row !! 10)
+            col12 = safeReadDouble (row !! 11)
+         in [col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12]
+      -- get arrays to not contain first row to now act as the features value
+      selectedNumericRows = map selectTargetColumns rowsOfStrings
+      -- create the set of feature and label values
+      transformRow :: [Double] -> (Features, Label)
+      transformRow selectedRow =
+        -- if the first row value is greater than 15 then it is considered true otherwise it is false.
+        let label = if head selectedRow > 15 then 1.0 else 0.0
+            features = tail selectedRow
+         in (features, label)
+
+      dataset = map transformRow selectedNumericRows
+   in dataset
+
+main :: IO ()
+main = do
+  fileContents <- readFile "charlotte_weather.csv"
+
+  let dataset = parseCSVData fileContents
+  -- test output to make sure the CSV has run correctly
+  putStrLn $ "First data point: " ++ show (head dataset)
+
+  let learningRate = 0.0005
+  let numOfRuns = 10000
+
+  let (finalWeights, finalBias) = train dataset learningRate numOfRuns
+  putStrLn $ "Trained Weights: " ++ show finalWeights
+  putStrLn $ "Trained Bias: " ++ show finalBias
+
+  let prediction = predict [80.0, 14.0, 0.0, 0.0, 0.0, 100.0, 1015.4, 15.8, 31.3, 21.0] finalWeights finalBias
+  putStrLn $ "Prediction for " ++ ": " ++ show prediction

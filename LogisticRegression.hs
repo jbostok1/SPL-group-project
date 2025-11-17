@@ -91,8 +91,8 @@ stringsToDoublesSafe :: [String] -> [Double]
 stringsToDoublesSafe = map safeReadDouble
 
 -- read in the CSV data
-parseCSVData :: String -> [(Features, Label)]
-parseCSVData fileContent =
+parseCSVData :: String -> Double -> [(Features, Label)]
+parseCSVData fileContent temp =
   let linesOfStrings = lines fileContent
       -- drop the first column of data as it is just time data
       dataLines = drop 1 linesOfStrings
@@ -119,18 +119,53 @@ parseCSVData fileContent =
       transformRow :: [Double] -> (Features, Label)
       transformRow selectedRow =
         -- if the first row value is greater than 15 then it is considered true otherwise it is false.
-        let label = if head selectedRow > 15 then 1.0 else 0.0
+        let label = if head selectedRow > temp then 1.0 else 0.0
             features = tail selectedRow
          in (features, label)
 
       dataset = map transformRow selectedNumericRows
    in dataset
 
+stringToDouble :: String -> Double
+stringToDouble s = read s :: Double
+
 main :: IO ()
 main = do
   fileContents <- readFile "charlotte_weather.csv"
+  putStrLn "What Temperature would you like to test against?"
+  temp <- readLn :: IO Double
 
-  let dataset = parseCSVData fileContents
+  putStrLn "What is the relative humidity of the day you are testing?"
+  relHumidity <- readLn :: IO Double
+
+  putStrLn "What is the apparent temperature of the day you are testing?"
+  apparentTemp <- readLn :: IO Double
+
+  putStrLn "What is the precipitation of the day you are testing?"
+  precipitation <- readLn :: IO Double
+
+  putStrLn "What is the rain of the day you are testing?"
+  rain <- readLn :: IO Double
+
+  putStrLn "What is the snowfall of the day you are testing?"
+  snowfall <- readLn :: IO Double
+
+  putStrLn "What is the cloud cover of the day you are testing?"
+  cloudCover <- readLn :: IO Double
+
+  putStrLn "What is the atmospheric pressure of the day you are testing?"
+  pressure <- readLn :: IO Double
+
+  putStrLn "What is the wind speed of the day you are testing?"
+  windSpeed <- readLn :: IO Double
+
+  putStrLn "What is the wind gust of the day you are testing?"
+  windGust <- readLn :: IO Double
+
+  putStrLn "What is the wind direction of the day you are testing?"
+  windDirection <- readLn :: IO Double
+
+  let dataset = parseCSVData fileContents temp
   -- test output to make sure the CSV has run correctly
   putStrLn $ "First data point: " ++ show (head dataset)
 
@@ -140,6 +175,7 @@ main = do
   let (finalWeights, finalBias) = train dataset learningRate numOfRuns
   putStrLn $ "Trained Weights: " ++ show finalWeights
   putStrLn $ "Trained Bias: " ++ show finalBias
-
-  let prediction = predict [80.0, 14.0, 0.0, 0.0, 0.0, 100.0, 1015.4, 15.8, 31.3, 21.0] finalWeights finalBias
-  putStrLn $ "Prediction for " ++ ": " ++ show prediction
+  -- [75,20.0,0.0,0.0,0.0,100,1015.4,15.8,31.3,21]
+  -- [relHumidity, apparentTemp, precipitation, rain, snowfall, cloudCover, pressure, windSpeed, windGust, windDirection]
+  let prediction = predict [75, 20.0, 0.0, 0.0, 0.0, 100, 1015.4, 15.8, 31.3, 21] finalWeights finalBias
+  putStrLn $ "Prediction for given day" ++ ": " ++ show prediction

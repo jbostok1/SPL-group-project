@@ -54,6 +54,18 @@ loadWeather filePath = do
         weatherdata = map toLine csvData
     return weatherdata
 
+boolToString :: Bool -> String
+boolToString True  = "True"
+boolToString False = "False"
+
+processedToCSV :: ProcessedWeather -> String
+processedToCSV pw = 
+    boolToString (targetRain pw) ++ "," ++
+    boolToString (isHot pw) ++ "," ++
+    boolToString (isHumid pw) ++ "," ++
+    boolToString (isCloud pw) ++ "," ++
+    boolToString (isWindy pw)
+
 main :: IO ()
 main = do
     weatherdata <- loadWeather "charlotte_weather.csv"

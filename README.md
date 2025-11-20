@@ -48,7 +48,7 @@ Automatically builds optimal trees
 # 3. Entropy Calculation 
 Entropy = -Σ(p_i * log2(p_i))
 
-# How to run 
+# How to run Decision Tree
 -- ensure that the charlotte_weather.csv is in the same directory as the code file --
 
 ghc DecisionTree.hs -o DecisionTree
@@ -103,7 +103,7 @@ a = intercept
 
 b = slope
 
-# How to run 
+# How to run Linear Regression
 -- ensure that the charlotte_weather.csv is in the same directory as the code file --
 
 ghc LinearRegression.hs -o LinearRegression

@@ -7,18 +7,7 @@ After all data is given the code will run and return the result of either a 1.0 
 
 *****************************************************************************************************************************************************************************
 
-# Project Structure - Decision tree
-
-DecisionTree.hs - Complete implementation with ID3 algorithm and multiple trees
-SimpleDecisionTree.hs - Simplified educational version with clear explanations
-Solution.hs - Your original data processing code
-ReadCSV.hs - CSV reading utilities
-weather.py - Python script to fetch weather data
-charlotte_weather.csv - Raw weather data
-processed_weather.csv - Processed boolean features
-How Decision Trees Work
-
-# 1. Basic Concept
+# 1. Basic Concept of Decision tree
 A decision tree is a tree-like model of decisions:
 
 Internal nodes represent tests on attributes (e.g., "Is it hot?")

@@ -1,12 +1,3 @@
-
-# Linear Regression in Haskell
-
-A simple command-line linear regression calculator implemented in Haskell that computes the best-fit line for a given dataset and makes predictions with built-in validation.
-
-After all data is given the code will run and return the result of either a 1.0 or a 0.0.  a 1.0 indicates the model predicts that the data of the day you gave would predict the temperature would be over the given temperature, a 0.0 would predict it will be bellow the given temperature
-
-*****************************************************************************************************************************************************************************
-
 # 1. Basic Concept of Decision tree
 A decision tree is a tree-like model of decisions:
 

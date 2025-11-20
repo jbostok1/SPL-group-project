@@ -2,14 +2,14 @@
 1) Ensure ghc is installed to run Haskell.
 2) Ensure the charlotte_weather.csv for the sample data is in the same directory as the code files.
 
-For Decision Tree:
+**For Decision Tree:**
 
 ghc DecisionTree.hs -o DecisionTree
 
 ./DecisionTree
 
 
-For Logisitic Regression:
+**For Logisitic Regression:**
 
 ghc LogisticRegression.hs -o LogisticRegression
 
@@ -18,7 +18,7 @@ ghc LogisticRegression.hs -o LogisticRegression
 -> then enter weather values (as number values) to test against
 
 
-For Linear Regression:
+**For Linear Regression:**
 
 ghc LinearRegression.hs -o LinearRegression
 

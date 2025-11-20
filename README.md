@@ -28,6 +28,8 @@ ghc LinearRegression.hs -o LinearRegression
 
 Further details and explanations regarding each code file are listed below...
 
+*****************************************************************************************************************************************************************************
+
 # 1. Basic Concept of Decision tree
 A decision tree is a tree-like model of decisions:
 
@@ -55,102 +57,57 @@ ghc DecisionTree.hs -o DecisionTree
 ./DecisionTree
 
 *****************************************************************************************************************************************************************************
+# 1. Basic Concept of Linear Regression
 
-# Linear Regression in Haskell
+Linear regression finds a straight-line relationship between two variables.
+In this program:
 
-A simple command-line linear regression calculator implemented in Haskell that computes the best-fit line for a given dataset and makes predictions.
+Temperature (X) → input
 
-## Overview
+Humidity (Y) → predicted value
 
-This program performs simple linear regression analysis using the least squares method. It calculates the line of best fit in the form `y = a + bx` where:
-- `a` is the y-intercept
-- `b` is the slope
+The program fits a line: Y = a + bX
 
-## Features
+# 2. Building the Model
+Linear Regression Program (LinearRegression.hs)
 
-- **Interactive Input**: Enter X and Y values via command line
-- **Linear Regression Calculation**: Computes intercept and slope using the least squares method
-- **Prediction**: Make predictions for new X values based on the computed regression line
-- **Input Validation**: Ensures X and Y datasets have the same length
+This code:
 
-## How It Works
+Reads charlotte_weather.csv
 
-The program uses the following formulas:
+Extracts temperature and humidity values
 
-**Slope (b)**:
-```
-b = Σ[(x - mean_x)(y - mean_y)] / Σ[(x - mean_x)²]
-```
+Calculates:
 
-**Intercept (a)**:
-```
-a = mean_y - b * mean_x
-```
+Slope (b)
 
-**Prediction**:
-```
-y_predicted = a + b * x_new
-```
+Intercept (a)
 
-## Usage
+Prints the regression equation
 
-### Running the Program
+Lets the user enter a temperature to get a predicted humidity
 
-```bash
+Warns if:
+
+CSV is missing
+
+Temperature is outside the training range
+
+Prediction goes below 0% or above 100% (it clamps it)
+
+# 3. Regression Formula
+
+Y = a + bX
+
+a = intercept
+
+b = slope
+
+# How to run 
 -- ensure that the charlotte_weather.csv is in the same directory as the code file --
 
 ghc LinearRegression.hs -o LinearRegression
 
 ./LinearRegression
-```
 
-### Example Session
-
-```
-Enter X values (space-separated):
-1 2 3 4 5
-
-Enter Y values (space-separated):
-2 4 5 4 5
-
-Intercept (a): 2.2
-Slope (b): 0.6
-
-Enter a new X value to predict Y:
-6
-Predicted Y for x = 6.0 is 5.8
-```
-
-## Functions
-
-### `mean :: [Double] -> Double`
-Calculates the arithmetic mean of a list of numbers.
-
-### `linearRegression :: [Double] -> [Double] -> (Double, Double)`
-Computes the linear regression coefficients (intercept, slope) from X and Y datasets.
-
-### `predict :: (Double, Double) -> Double -> Double`
-Makes a prediction for a new X value using the computed regression model.
-
-### `readDoubles :: String -> [Double]`
-Parses a space-separated string of numbers into a list of doubles.
-
-## Requirements
-
-- GHC (Glasgow Haskell Compiler) or any Haskell interpreter
-- No external dependencies required
-
-## Error Handling
-
-The program validates that:
-- X and Y datasets have the same number of values
-- At least one data point is provided
-- Prediction input is a valid number
-
-## Mathematical Background
-
-Linear regression finds the line that minimizes the sum of squared residuals (differences between observed and predicted values). This implementation uses the ordinary least squares (OLS) method, which is the most common approach for simple linear regression.
-
-## License
-
-This is an educational implementation for learning purposes.
+*****************************************************************************************************************************************************************************

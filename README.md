@@ -8,16 +8,6 @@ ghc DecisionTree.hs -o DecisionTree
 
 ./DecisionTree
 
-
-**For Logisitic Regression:**
-
-ghc LogisticRegression.hs -o LogisticRegression
-
-./LogisticRegression
-
--> then enter weather values (as number values) to test against
-
-
 **For Linear Regression:**
 
 ghc LinearRegression.hs -o LinearRegression
@@ -27,6 +17,14 @@ ghc LinearRegression.hs -o LinearRegression
 -> then enter a temperature value to test against
 
 Further details and explanations regarding each code file are listed below...
+
+**For Logisitic Regression:**
+
+ghc LogisticRegression.hs -o LogisticRegression
+
+./LogisticRegression
+
+-> You will be prompted to give data, first will be the temperature you will be comparing agsint.  All other data will be the data of the day you are comparing against. After all data is given the code will run and return the result of either a 1.0 or a 0.0.  a 1.0 indicates the model predicts that the data of the day you gave would predict the temperature would be over the given temperature, a 0.0 would predict it will be bellow the given temperature
 
 *****************************************************************************************************************************************************************************
 
@@ -113,3 +111,36 @@ ghc LinearRegression.hs -o LinearRegression
 -> then enter a temperature value to test against
 
 *****************************************************************************************************************************************************************************
+
+# 1. Basic Concept of Logistic Regression
+
+Logistic regression is a classification method that predicts whether an outcome belongs to one of two classes (0 or 1).
+
+It works by:
+
+Taking numerical feature inputs
+
+Computing a weighted sum of those features
+
+Passing this value through the sigmoid function
+
+Outputting a probability → values ≥ 0.5 are classified as 1, otherwise 0
+
+# 2. Building the Model
+
+Logistic Regression Approach (LogisticRegression.hs)
+
+Uses the sigmoid function to convert values into probabilities
+Computes gradients for weights and bias
+Uses gradient descent to update parameters over many iterations
+Trains weights and bias based on weather data from the CSV file
+Predicts whether a given day is “hot” (label 1) or “not hot” (label 0) based on multiple weather features
+
+# How to run Logistic Regression
+-- ensure that the charlotte_weather.csv is in the same directory as the code file --
+
+ghc LogisticRegression.hs -o LogisticRegression
+
+./LogisticRegression
+
+-> You will be prompted to give data, first will be the temperature you will be comparing agsint.  All other data will be the data of the day you are comparing against. After all data is given the code will run and return the result of either a 1.0 or a 0.0.  a 1.0 indicates the model predicts that the data of the day you gave would predict the temperature would be over the given temperature, a 0.0 would predict it will be bellow the given temperature

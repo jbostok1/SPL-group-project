@@ -17,6 +17,8 @@ Automatically builds optimal trees
 Entropy = -Σ(p_i * log2(p_i))
 
 # How to run 
+-- ensure that the charlotte_weather.csv is in the same directory as the code file --
+
 ghc DecisionTree.hs -o DecisionTree
 
 
@@ -65,6 +67,8 @@ y_predicted = a + b * x_new
 ### Running the Program
 
 ```bash
+-- ensure that the charlotte_weather.csv is in the same directory as the code file --
+
 ghc LinearRegression.hs -o LinearRegression
 
 ./LinearRegression

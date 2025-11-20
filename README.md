@@ -110,4 +110,6 @@ ghc LinearRegression.hs -o LinearRegression
 
 ./LinearRegression
 
+-> then enter a temperature value to test against
+
 *****************************************************************************************************************************************************************************

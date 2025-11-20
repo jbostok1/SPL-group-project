@@ -24,7 +24,7 @@ ghc LogisticRegression.hs -o LogisticRegression
 
 ./LogisticRegression
 
--> You will be prompted to give data, first will be the temperature you will be comparing agsint.  All other data will be the data of the day you are comparing against. After all data is given the code will run and return the result of either a 1.0 or a 0.0.  a 1.0 indicates the model predicts that the data of the day you gave would predict the temperature would be over the given temperature, a 0.0 would predict it will be bellow the given temperature
+-> You will be prompted to give data, first will be the temperature you will be comparing agsint.  All other data will be the data of the day you are comparing against. After all data is given the code will run and return the result of either a 1.0 or a 0.0.  a 1.0 indicates the model predicts that the data of the day you gave would predict the temperature would be over the given temperature, a 0.0 would predict it will be below the given temperature
 
 *****************************************************************************************************************************************************************************
 
@@ -58,16 +58,14 @@ ghc DecisionTree.hs -o DecisionTree
 # 1. Basic Concept of Linear Regression
 
 Linear regression finds a straight-line relationship between two variables.
-In this program:
 
-Temperature (X) → input
+Temperature = X → input
 
-Humidity (Y) → predicted value
+Humidity = Y → predicted value
 
-The program fits a line: Y = a + bX
+The program finds a line: Y = a + bX
 
 # 2. Building the Model
-Linear Regression Program (LinearRegression.hs)
 
 This code:
 
@@ -75,23 +73,17 @@ Reads charlotte_weather.csv
 
 Extracts temperature and humidity values
 
-Calculates:
-
-Slope (b)
-
-Intercept (a)
-
-Prints the regression equation
+Calculates a slope and intercept (X and Y)
 
 Lets the user enter a temperature to get a predicted humidity
 
-Warns if:
+Warns if any of the following:
 
-CSV is missing
+- CSV is missing
 
-Temperature is outside the training range
+- Temperature is outside the training range
 
-Prediction goes below 0% or above 100% (it clamps it)
+- Prediction goes below 0% or above 100%
 
 # 3. Regression Formula
 
@@ -114,27 +106,21 @@ ghc LinearRegression.hs -o LinearRegression
 
 # 1. Basic Concept of Logistic Regression
 
-Logistic regression is a classification method that predicts whether an outcome belongs to one of two classes (0 or 1).
-
-It works by:
-
-Taking numerical feature inputs
-
-Computing a weighted sum of those features
-
-Passing this value through the sigmoid function
+Logistic regression is used to model the probability of a 'discrete' outcome. 
 
 Outputting a probability → values ≥ 0.5 are classified as 1, otherwise 0
 
+When values are run through the logistic regression model, it can allow the user to know whether or not a value is likely to fall above or below a given value.
+
 # 2. Building the Model
 
-Logistic Regression Approach (LogisticRegression.hs)
+The model takes values from the user and also values from the charlotte_weather.csv. The data from the csv is used as the sample data to compute whether the temperature is more likely to be above or below the given value.
 
-Uses the sigmoid function to convert values into probabilities
-Computes gradients for weights and bias
-Uses gradient descent to update parameters over many iterations
-Trains weights and bias based on weather data from the CSV file
-Predicts whether a given day is “hot” (label 1) or “not hot” (label 0) based on multiple weather features
+The hypothesis is: h(x) = 1 / (1 + e^(−(w·x + b)))
+
+The sigmoid function is: σ(z) = 1 / (1 + e^(−z))
+
+and the prediction rule is: If h(x) ≥ 0.5 → predict 1, If h(x) < 0.5 → predict 0
 
 # How to run Logistic Regression
 -- ensure that the charlotte_weather.csv is in the same directory as the code file --
@@ -143,4 +129,4 @@ ghc LogisticRegression.hs -o LogisticRegression
 
 ./LogisticRegression
 
--> You will be prompted to give data, first will be the temperature you will be comparing agsint.  All other data will be the data of the day you are comparing against. After all data is given the code will run and return the result of either a 1.0 or a 0.0.  a 1.0 indicates the model predicts that the data of the day you gave would predict the temperature would be over the given temperature, a 0.0 would predict it will be bellow the given temperature
+-> You will be prompted to give data, first will be the temperature you will be comparing agsint.  All other data will be the data of the day you are comparing against. After all data is given the code will run and return the result of either a 1.0 or a 0.0.  a 1.0 indicates the model predicts that the data of the day you gave would predict the temperature would be over the given temperature, a 0.0 would predict it will be below the given temperature

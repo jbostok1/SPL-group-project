@@ -6,12 +6,6 @@ Branches represent the outcome of tests (Yes/No)
 Leaf nodes represent class labels (e.g., "Hot Weather")
 
 # 2. Building the Tree
-The implementation uses two approaches:
-Simple Approach (SimpleDecisionTree.hs)
-
-Manually constructed tree based on logical weather patterns
-Easy to understand and modify
-Good for learning the concept
 
 ID3 Algorithm Approach (DecisionTree.hs)
 

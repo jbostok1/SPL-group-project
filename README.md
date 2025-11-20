@@ -65,10 +65,9 @@ y_predicted = a + b * x_new
 ### Running the Program
 
 ```bash
-(program requires split package to be installed in ghc)
-stack install split
+ghc LinearRegression.hs -o LinearRegression
 
-runhaskell Linear_Regression.hs
+./LinearRegression
 ```
 
 ### Example Session

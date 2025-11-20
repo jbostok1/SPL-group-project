@@ -2,11 +2,17 @@
 
 import Text.Read (readMaybe)
 import System.IO
-import Data.List.Split (splitOn)
 import Control.Exception (try, IOException)
 
 mean :: [Double] -> Double
 mean xs = sum xs / fromIntegral (length xs)
+
+splitOn :: Char -> String -> [String]
+splitOn delimiter = foldr f [[]]
+  where
+    f c acc@(x:xs)
+      | c == delimiter = [] : acc
+      | otherwise  = (c : x) : xs
 
 linearRegression :: [Double] -> [Double] -> (Double, Double)
 linearRegression xs ys = (a, b)
@@ -22,7 +28,7 @@ predict :: (Double, Double) -> Double -> Double
 predict (a, b) x = a + b * x
 
 parseCSVLine :: String -> [String]
-parseCSVLine = splitOn ","
+parseCSVLine = splitOn ','
 
 -- Parse charlotte_weather.csv format
 parseWeatherCSV :: String -> ([Double], [Double])

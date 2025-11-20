@@ -3,17 +3,27 @@
 2) Ensure the charlotte_weather.csv for the sample data is in the same directory as the code files.
 
 For Decision Tree:
+
 ghc DecisionTree.hs -o DecisionTree
+
 ./DecisionTree
 
+
 For Logisitic Regression:
+
 ghc LogisticRegression.hs -o LogisticRegression
+
 ./LogisticRegression
+
 -> then enter weather values (as number values) to test against
 
+
 For Linear Regression:
+
 ghc LinearRegression.hs -o LinearRegression
+
 ./LinearRegression
+
 -> then enter a temperature value to test against
 
 Further details and explanations regarding each code file are listed below...

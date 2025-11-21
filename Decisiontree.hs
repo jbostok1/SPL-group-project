@@ -71,6 +71,21 @@ processWeather w = ProcessedWeather
   , isWindy    = windspeed w > 15.0   -- Windy is over 15 km/h
   }
 
+processedToCSVformat :: ProcessedWeather -> String
+processedToCSVformat pw = 
+    show (targetRain pw) ++ "," ++
+    show (isHot pw) ++ "," ++
+    show (isHumid pw) ++ "," ++
+    show (isCloud pw) ++ "," ++
+    show (isWindy pw) ++ ","
+
+-- create a processed CSV in the same directory
+createProcessedCSV :: FilePath -> [ProcessedWeather] -> IO ()
+createProcessedCSV path rows = do
+    let titles = "Rain,Hot,Humid,Cloud,Windy\n"
+    let processedData = unlines (map processedToCSVformat rows)
+    writeFile path (titles ++ processedData)
+
 -- Load weather data from CSV
 toLine :: [String] -> Weather
 toLine [tim, tem, hum, fee, pre, rai, sno, clo, pres, win, gus, dir] = 
@@ -260,12 +275,13 @@ main :: IO ()
 main = do
     --  Load from raw weather data
     putStrLn "=== Weather Decision Tree Classifier ==="
-    putStrLn "\nOption 1: Loading raw weather data..."
+    putStrLn "\nLoading raw weather data..."
     weatherData <- loadWeather "charlotte_weather.csv"
     let processedFromRaw = map processWeather weatherData
 
     --  Load from processed CSV
-    putStrLn "Option 2: Loading processed weather data..."
+    putStrLn "Loading processed weather data..."
+    createProcessedCSV "processed_weather.csv" processedFromRaw
     processedData <- loadProcessedWeather "processed_weather.csv"
 
     -- Use processed data for training

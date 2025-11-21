@@ -8,6 +8,8 @@ ghc DecisionTree.hs -o DecisionTree
 
 ./DecisionTree
 
+-> then enter weather values to classify (can copy and paste example values)
+
 **For Linear Regression:**
 
 ghc LinearRegression.hs -o LinearRegression
